@@ -1,1 +1,5 @@
-spring.application.name=user-search-service
+spring:
+  application:
+    name: user-search-service
+  config:
+    import: optional:configserver:http://localhost:8888
