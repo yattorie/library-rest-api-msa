@@ -80,5 +80,10 @@ public class ControllerAdvice {
         return new ExceptionBody("Internal error");
     }
 
-
+    @ExceptionHandler(InvalidBookStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionBody handleInvalidBookStateException(InvalidBookStateException e) {
+        LoggerUtil.logError("Invalid available copies: " + e.getMessage(), e);
+        return new ExceptionBody(e.getMessage());
+    }
 }
