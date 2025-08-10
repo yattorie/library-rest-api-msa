@@ -1,6 +1,7 @@
 package com.orlovandrei.usersearchservice.service.impl;
 
-import com.orlovandrei.usersearchservice.dto.UserDto;
+import com.orlovandrei.usersearchservice.dto.user.UserDto;
+import com.orlovandrei.usersearchservice.dto.internal.InternalUserDto;
 import com.orlovandrei.usersearchservice.dto.mapper.UserMapper;
 import com.orlovandrei.usersearchservice.entity.User;
 import com.orlovandrei.usersearchservice.exception.UserNotFoundException;
@@ -41,6 +42,14 @@ public class UserSearchServiceImpl implements UserSearchService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(Messages.USER_NOT_FOUND_USERNAME.getMessage() + username));
         return userMapper.toDto(user);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public InternalUserDto getInternalByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(Messages.USER_NOT_FOUND_USERNAME.getMessage() + username));
+        return new InternalUserDto(user.getId(), user.getUsername());
     }
 
     @Override
