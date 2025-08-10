@@ -122,6 +122,10 @@ public class ControllerAdvice {
         return new ExceptionBody(e.getMessage());
     }
 
-
-
+    @ExceptionHandler(DuplicateOrderException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ExceptionBody handleDuplicateOrderException(DuplicateOrderException e) {
+        LoggerUtil.logError("Duplicate order attempt: " + e.getMessage(), e);
+        return new ExceptionBody(e.getMessage());
+    }
 }
