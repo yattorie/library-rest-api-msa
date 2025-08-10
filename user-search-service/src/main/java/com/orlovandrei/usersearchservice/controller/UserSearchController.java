@@ -1,6 +1,6 @@
 package com.orlovandrei.usersearchservice.controller;
 
-import com.orlovandrei.usersearchservice.dto.UserDto;
+import com.orlovandrei.usersearchservice.dto.user.UserDto;
 import com.orlovandrei.usersearchservice.service.UserSearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
