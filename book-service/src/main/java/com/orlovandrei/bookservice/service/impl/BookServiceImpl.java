@@ -7,6 +7,7 @@ import com.orlovandrei.bookservice.dto.mapper.BookMapper;
 import com.orlovandrei.bookservice.entity.Book;
 import com.orlovandrei.bookservice.exception.BookAlreadyExistsException;
 import com.orlovandrei.bookservice.exception.BookNotFoundException;
+import com.orlovandrei.bookservice.exception.InvalidBookStateException;
 import com.orlovandrei.bookservice.repository.BookRepository;
 import com.orlovandrei.bookservice.service.BookService;
 import com.orlovandrei.bookservice.util.Messages;
@@ -79,6 +80,21 @@ public class BookServiceImpl implements BookService {
         }
         bookRepository.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public BookDto updateAvailableCopies(Long id, Integer availableCopies) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(Messages.BOOK_NOT_FOUND_BY_ID.getMessage() + id));
+
+        if (availableCopies < 0) {
+            throw new InvalidBookStateException(Messages.AVAILABLE_COPIES_CANNOT_BE_NEGATIVE.getMessage());
+        }
+
+        book.setAvailableCopies(availableCopies);
+        return bookMapper.toDto(bookRepository.save(book));
+    }
+
 }
 
 

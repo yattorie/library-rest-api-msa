@@ -21,4 +21,7 @@ public interface BookService {
 
     @Transactional
     void delete(Long id);
+
+    @Transactional
+    BookDto updateAvailableCopies(Long id, Integer availableCopies);
 }
