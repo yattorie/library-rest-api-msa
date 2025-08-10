@@ -13,5 +13,12 @@ services:
     ports:
       - "5432:5432"
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    restart: always
+
 volumes:
   postgres_data:
