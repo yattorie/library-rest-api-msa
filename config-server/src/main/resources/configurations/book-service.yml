@@ -1,0 +1,40 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8082
+spring:
+  application:
+    name: book-service
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book_db
+    username: postgres
+    password: root
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    repair-on-migrate: true
+
+security:
+  jwt:
+    secret_key: 71472e78c8154ede3e98ffcf9bcca01b8d2299d5d9457ef147b82914d1f02b8e9f524241d9ad50dea9f4cb34cafddceb3319872fd5b56ff2f0f0ac36d6f4fb21
+    access_token_expiration: 36000000
+    refresh_token_expiration: 252000000
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
